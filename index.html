@@ -40,7 +40,7 @@
             to { transform: rotate(360deg); }
         }
     </style>
-<link rel="modulepreload" href="./flatbuf-visualizer.js" crossorigin="anonymous" integrity="sha384-O1GEWLjDepJNfKU8d5CisoZP5jOgS69V93V5sAeldNozPEgs01o8JAybd72dVP7Q"><link rel="preload" href="./flatbuf-visualizer_bg.wasm" crossorigin="anonymous" integrity="sha384-UfGHybSJRObv8te7vN11uzJwgSEpRnGZRAQs83uHbyUNmqYbbXWaxCke0tvjM9xr" as="fetch" type="application/wasm"></head>
+<link rel="modulepreload" href="./flatbuf-visualizer-7b74aaa06cf49d05.js" crossorigin="anonymous" integrity="sha384-7g4B7FkszUVvLPiVnEKQen+7fFjxMX+51C6pTw3HTyJy6rvqLP2EtCt7fWv3X9Nd"><link rel="preload" href="./flatbuf-visualizer-7b74aaa06cf49d05_bg.wasm" crossorigin="anonymous" integrity="sha384-ub/dm8H0LScIe63+m+Qgu7aQE8FyFPKc22jeKOWdx4/Y0Y1Hhvi/MHXXHu4LJr1m" as="fetch" type="application/wasm"></head>
 <body>
     <div id="loading">
         <div class="spinner"></div>
@@ -55,12 +55,18 @@
                 document.getElementById("loading").style.display = "none";
             });
             observer.observe(canvas, { attributes: true });
+
+            // Re-enable browser right-click context menu (eframe blocks it by default).
+            // Use capture phase to intercept before eframe's handler.
+            canvas.addEventListener("contextmenu", function(e) {
+                e.stopImmediatePropagation();
+            }, true);
         });
     </script>
 
 <script type="module">
-import init, * as bindings from './flatbuf-visualizer.js';
-const wasm = await init({ module_or_path: './flatbuf-visualizer_bg.wasm' });
+import init, * as bindings from './flatbuf-visualizer-7b74aaa06cf49d05.js';
+const wasm = await init({ module_or_path: './flatbuf-visualizer-7b74aaa06cf49d05_bg.wasm' });
 
 
 window.wasmBindings = bindings;
