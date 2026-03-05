@@ -1,0 +1,64 @@
+# FlatBuffers Binary Visualizer
+
+> Interactive browser-based tool for inspecting FlatBuffers binary encodings.
+> Paste a `.fbs` schema and JSON or hex data to see what every byte means --
+> vtables, scalars, strings, vectors, structs, padding -- color-coded and
+> cross-linked between hex view and structure tree.
+
+Live demo: https://fbsviewer.shuozeli.com/
+
+This is a static site. The entire application runs client-side as WebAssembly.
+No server, no API, no cookies, no tracking.
+
+## How to Use
+
+1. Open https://fbsviewer.shuozeli.com/
+2. Paste a `.fbs` schema (or pick a built-in template from the dropdown)
+3. Paste JSON data or hex-encoded binary data
+4. The hex view shows every byte color-coded by region type
+5. The structure tree shows the decoded hierarchy
+6. Hover to cross-highlight between hex and tree; click to lock
+
+## Features
+
+- Full FlatBuffers schema compiler running in-browser (WebAssembly)
+- Pure Rust JSON-to-FlatBuffers encoder (no server round-trips)
+- Color-coded hex view: vtable (blue), scalar (green), string (yellow),
+  vector (purple), struct (orange), padding (gray)
+- Collapsible structure tree with bidirectional hover highlighting
+- Click-to-lock highlighting for persistent inspection
+- Data format toggle: switch between JSON and Hex input with auto-conversion
+- 12 built-in templates: Monster, unions, vectors, nested structs, enums, etc.
+- Decoded JSON view showing walker output
+- File upload support (browser file picker)
+- Fully offline -- no network requests after initial page load
+
+## What This Repo Contains
+
+Pre-built static files for deployment. No build step required.
+
+```
+index.html                                  HTML entry point
+flatbuf-visualizer-*.js                     JS glue (wasm-bindgen)
+flatbuf-visualizer-*_bg.wasm                Compiled WASM (~3.8 MB)
+```
+
+Self-host by uploading all files to any static hosting, or preview locally:
+
+```bash
+python3 -m http.server 8080
+```
+
+## Source Code and Related Projects
+
+| Repo | What it is |
+|------|-----------|
+| [Shuozeli/fbsviewer-lib](https://github.com/Shuozeli/fbsviewer-lib) | Source code: visualizer-core, egui app, CLI tool |
+| [Shuozeli/flatbuffers-rs](https://github.com/Shuozeli/flatbuffers-rs) | Rust FlatBuffers compiler powering the schema compilation |
+| [Shuozeli/fbsviewer](https://github.com/Shuozeli/fbsviewer) | This repo: pre-built WASM deploy artifacts |
+
+## Optional
+
+- [Blog post](https://github.com/Shuozeli/fbsviewer-lib/blob/main/docs/blogposts/flatbuffers-binary-visualizer.md)
+- [Source README](https://github.com/Shuozeli/fbsviewer-lib/blob/main/README.md)
+- [Report a bug](https://github.com/Shuozeli/fbsviewer-lib/issues/new/choose)
