@@ -2,8 +2,8 @@
 
 An interactive browser-based tool for inspecting
 [FlatBuffers](https://flatbuffers.dev/) binary encodings. Paste a `.fbs`
-schema and hex-encoded binary data to see exactly how the bytes map to
-tables, structs, strings, vectors, and unions.
+schema and JSON or hex-encoded binary data to see exactly how the bytes map
+to tables, structs, strings, vectors, and unions.
 
 **Try it now: [fbsviewer.shuozeli.com](https://fbsviewer.shuozeli.com/)**
 
@@ -34,18 +34,19 @@ of the binary data, reconstructed from the raw bytes using the schema.
 **Compiled schema JSON** -- View the intermediate compiled schema
 representation to understand how the compiler interpreted your `.fbs` input.
 
-**Built-in examples** -- Choose from built-in templates to explore different
-FlatBuffers features:
+**Data format toggle** -- Switch between JSON and hex input. Paste JSON data
+and the encoder converts it to FlatBuffers binary automatically using a pure
+Rust encoder running in-browser.
 
-| Template | Features covered |
-|---|---|
-| Monster | struct, enum, string, vector of scalars |
-| Simple Scalars | bool, int, float fields |
-| Nested Structs | struct-in-struct, string, float |
-| String Fields | multiple string fields, int |
+**Built-in examples** -- 12 built-in templates covering monsters, unions,
+vectors, nested structs, enums, scalars, strings, and more. Select from the
+dropdown to explore different FlatBuffers features.
+
+**URL permalinks** -- Schema and data are encoded into the URL query
+parameters automatically. Share a link to reproduce the exact visualization.
 
 **File upload** -- Upload `.fbs` schema files and binary data files directly
-from disk (both native and WASM).
+from disk.
 
 **Fully offline** -- Runs entirely client-side. No network requests, no
 cookies, no local storage. Everything happens in the browser.
@@ -53,8 +54,8 @@ cookies, no local storage. Everything happens in the browser.
 ## Usage
 
 1. Enter (or upload) a `.fbs` schema in the left panel
-2. Enter hex-encoded binary data in the data panel, or select a built-in
-   example from the dropdown
+2. Enter JSON or hex-encoded binary data in the data panel, or select a
+   built-in example from the dropdown
 3. The hex view and structure tree update automatically
 4. Hover over bytes or tree nodes to see cross-highlighted regions
 5. Click to lock a highlight, click again to unlock
@@ -65,9 +66,9 @@ cookies, no local storage. Everything happens in the browser.
 This repository contains pre-built static files:
 
 ```
-index.html                      HTML entry point
-flatbuf-visualizer.js           JS glue (wasm-bindgen)
-flatbuf-visualizer_bg.wasm      Compiled WASM binary (~3.5 MB)
+index.html                          HTML entry point
+flatbuf-visualizer-*.js             JS glue (wasm-bindgen)
+flatbuf-visualizer-*_bg.wasm        Compiled WASM binary (~4.1 MB)
 ```
 
 Upload all three files to any static hosting provider, or preview locally:

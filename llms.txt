@@ -30,6 +30,8 @@ No server, no API, no cookies, no tracking.
 - Data format toggle: switch between JSON and Hex input with auto-conversion
 - 12 built-in templates: Monster, unions, vectors, nested structs, enums, etc.
 - Decoded JSON view showing walker output
+- URL permalinks: schema and data encoded into query parameters for sharing
+- Auto-update URL on compile/encode for persistent links
 - File upload support (browser file picker)
 - Fully offline -- no network requests after initial page load
 
@@ -40,7 +42,7 @@ Pre-built static files for deployment. No build step required.
 ```
 index.html                                  HTML entry point
 flatbuf-visualizer-*.js                     JS glue (wasm-bindgen)
-flatbuf-visualizer-*_bg.wasm                Compiled WASM (~3.8 MB)
+flatbuf-visualizer-*_bg.wasm                Compiled WASM (~4.1 MB)
 ```
 
 Self-host by uploading all files to any static hosting, or preview locally:
