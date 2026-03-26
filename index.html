@@ -50,9 +50,11 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Hide loading indicator once WASM is ready
-            var canvas = document.getElementById("the_canvas_id");
-            var observer = new MutationObserver(function() {
-                document.getElementById("loading").style.display = "none";
+            const canvas = document.getElementById("the_canvas_id");
+            const observer = new MutationObserver(function() {
+                const loading = document.getElementById("loading");
+                if (loading) loading.style.display = "none";
+                observer.disconnect();
             });
             observer.observe(canvas, { attributes: true });
 
@@ -66,13 +68,17 @@
 
 <script type="module">
 import init, * as bindings from './flatbuf-visualizer-52e17ab52898f434.js';
-const wasm = await init({ module_or_path: './flatbuf-visualizer-52e17ab52898f434_bg.wasm' });
-
-
-window.wasmBindings = bindings;
-
-
-dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
-
+try {
+    const wasm = await init({ module_or_path: './flatbuf-visualizer-52e17ab52898f434_bg.wasm' });
+    window.wasmBindings = bindings;
+    dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+} catch (e) {
+    const loading = document.getElementById("loading");
+    if (loading) {
+        loading.innerHTML = '<p>Failed to load WebAssembly module.</p>'
+            + '<p style="font-size:14px;color:#999">' + e.message + '</p>';
+    }
+    console.error("WASM init failed:", e);
+}
 </script></body>
 </html>
